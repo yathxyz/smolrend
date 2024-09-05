@@ -34,14 +34,20 @@ FetchContent_MakeAvailable(fetch_vk_bootstrap)
 include(FetchContent)
 
 FetchContent_Declare(
-	glm
-	GIT_REPOSITORY	https://github.com/g-truc/glm.git
-	GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
+    glm
+    GIT_REPOSITORY	https://github.com/g-truc/glm.git
+    GIT_TAG 	bf71a834948186f4097caa076cd2663c69a10e1e #refs/tags/1.0.1
 )
 FetchContent_MakeAvailable(glm)
+
+FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG 3.4
+)
+FetchContent_MakeAvailable(glfw)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${GLFW_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan vk-bootstrap::vk-bootstrap glm::glm ${GLFW_LIB_DIR})
-
+target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan vk-bootstrap::vk-bootstrap glm::glm glfw)
