@@ -6,8 +6,12 @@ set(CC C:/Users/iielefth/scoop/apps/mingw-winlibs-llvm/current/bin/clang.exe)
 set(CMAKE_C_COMPILER clang)
 set(CMAKE_CXX_COMPILER clang++)
 
+set(GLFW_LIB_DIR C:/Users/iielefth/scoop/apps/glfw/current/lib-vc2022/glfw3_mt.lib)
+set(GLFW_INCLUDE_DIR C:/Users/iielefth/scoop/apps/glfw/current/include)
+
 set(PROJECT_NAME VulkanTutorial)
 set(SOURCE src/main.cpp)
+
 project(${PROJECT_NAME})
 
 set(CMAKE_MAKE_PROGRAM Ninja)
@@ -15,11 +19,8 @@ set(CMAKE_MAKE_PROGRAM Ninja)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-link_directories("
-
 # Vulkan installed with `scoop install vulkan`
 find_package(Vulkan REQUIRED)
-
 
 # VK-bootstrap (useful for not wasting time with arcane lookups)
 include(FetchContent)
@@ -41,4 +42,6 @@ FetchContent_MakeAvailable(glm)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
-target_link_libraries(${PROJECT_NAME} vulkan glfw vk-bootstrap::vk-bootstrap glm::glm)
+target_include_directories(${PROJECT_NAME} PUBLIC ${GLFW_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan vk-bootstrap::vk-bootstrap glm::glm ${GLFW_LIB_DIR})
+

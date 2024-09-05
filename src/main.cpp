@@ -1,58 +1,40 @@
+#include <vulkan/vulkan.h>
+
 #include <iostream>
-#include <GLFW/glfw3.h>
+#include <stdexcept>
+#include <cstdlib>
 
-
-#include "VkBootstrap.h"
-
-bool init_vulkan () {
-    vkb::InstanceBuilder builder;
-    auto inst_ret = builder.set_app_name ("Example Vulkan Application")
-                        .request_validation_layers ()
-                        .use_default_debug_messenger ()
-                        .build ();
-    if (!inst_ret) {
-        std::cerr << "Failed to create Vulkan instance. Error: " << inst_ret.error().message() << "\n";
-        return false;
-    }
-    vkb::Instance vkb_inst = inst_ret.value ();
-
-    vkb::PhysicalDeviceSelector selector{ vkb_inst };
-    auto phys_ret = selector.set_surface (/* from user created window*/)
-                        .set_minimum_version (1, 1) // require a vulkan 1.1 capable device
-                        .require_dedicated_transfer_queue ()
-                        .select ();
-    if (!phys_ret) {
-        std::cerr << "Failed to select Vulkan Physical Device. Error: " << phys_ret.error().message() << "\n";
-        return false;
+class HelloTriangleApplication {
+public:
+    void run() {
+        initVulkan();
+        mainLoop();
+        cleanup();
     }
 
-    vkb::DeviceBuilder device_builder{ phys_ret.value () };
-    // automatically propagate needed data from instance & physical device
-    auto dev_ret = device_builder.build ();
-    if (!dev_ret) {
-        std::cerr << "Failed to create Vulkan device. Error: " << dev_ret.error().message() << "\n";
-        return false;
+private:
+    void initVulkan() {
+
     }
-    vkb::Device vkb_device = dev_ret.value ();
 
-    // Get the VkDevice handle used in the rest of a vulkan application
-    VkDevice device = vkb_device.device;
+    void mainLoop() {
 
-    // Get the graphics queue with a helper function
-    auto graphics_queue_ret = vkb_device.get_queue (vkb::QueueType::graphics);
-    if (!graphics_queue_ret) {
-        std::cerr << "Failed to get graphics queue. Error: " << graphics_queue_ret.error().message() << "\n";
-        return false;
     }
-    VkQueue graphics_queue = graphics_queue_ret.value ();
 
-    // Turned 400-500 lines of boilerplate into less than fifty.
-    return true;
+    void cleanup() {
+
+    }
+};
+
+int main() {
+    HelloTriangleApplication app;
+
+    try {
+        app.run();
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
-
-int main(void) {
-  init_vulkan();
-
-  return 0;
-}
-
