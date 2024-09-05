@@ -2,6 +2,20 @@
 
 Attempt at a tiny renderer using Vulkan.
 
+# Installation
+
+Only tested on windows at the moment. All prerequisite software was installed using the [scoop](https://scoop.sh) package manager.
+
+- vulkan
+- mingw-winlibs-llvm (should include clang/++, cmake and ninja)
+
+At the root of the repo:
+```
+mkdir build
+cd build
+cmake ..
+```
+
 # Licenses
 
 ## GLFW
