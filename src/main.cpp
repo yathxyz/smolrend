@@ -22,12 +22,12 @@ private:
   VkInstance instance;
 
   void initWindow() { // Holy shit this is so ugly. All functions act as side effects?
-      glfwInit();
+    glfwInit();
 
-      glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-      glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
-      window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
   }
 
   void createInstance() {
@@ -90,27 +90,27 @@ private:
   }
 
   void mainLoop() {
-      while (!glfwWindowShouldClose(window)) {
-          glfwPollEvents();
-      }
+    while (!glfwWindowShouldClose(window)) {
+      glfwPollEvents();
+    }
   }
 
   void cleanup() {
-      glfwDestroyWindow(window);
+    glfwDestroyWindow(window);
 
-      glfwTerminate();
+    glfwTerminate();
   }
 };
 
 int main() {
-    HelloTriangleApplication app;
+  HelloTriangleApplication app;
 
-    try {
-        app.run();
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
+  try {
+    app.run();
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
+    return EXIT_FAILURE;
+  }
 
-    return EXIT_SUCCESS;
+  return EXIT_SUCCESS;
 }
